@@ -147,6 +147,64 @@ export default {
 					'50%': {
 						transform: 'translateY(-20px)'
 					}
+				},
+				'fadeInUp': {
+					'0%': {
+						opacity: '0',
+						transform: 'translateY(50px)'
+					},
+					'100%': {
+						opacity: '1',
+						transform: 'translateY(0)'
+					}
+				},
+				'fadeInLeft': {
+					'0%': {
+						opacity: '0',
+						transform: 'translateX(-50px)'
+					},
+					'100%': {
+						opacity: '1',
+						transform: 'translateX(0)'
+					}
+				},
+				'fadeInRight': {
+					'0%': {
+						opacity: '0',
+						transform: 'translateX(50px)'
+					},
+					'100%': {
+						opacity: '1',
+						transform: 'translateX(0)'
+					}
+				},
+				'slideInUp': {
+					'0%': {
+						opacity: '0',
+						transform: 'translateY(100px)'
+					},
+					'100%': {
+						opacity: '1',
+						transform: 'translateY(0)'
+					}
+				},
+				'rotateIn': {
+					'0%': {
+						opacity: '0',
+						transform: 'rotate(-10deg) scale(0.9)'
+					},
+					'100%': {
+						opacity: '1',
+						transform: 'rotate(0deg) scale(1)'
+					}
+				},
+				'glow': {
+					'0%, 100%': {
+						boxShadow: '0 0 20px rgba(59, 130, 246, 0.5)'
+					},
+					'50%': {
+						boxShadow: '0 0 40px rgba(59, 130, 246, 0.8)'
+					}
 				}
 			},
 			animation: {
@@ -156,13 +214,22 @@ export default {
 				'slide-in-left': 'slide-in-left 0.6s ease-out',
 				'slide-in-right': 'slide-in-right 0.6s ease-out',
 				'scale-in': 'scale-in 0.4s ease-out',
-				'float': 'float 6s ease-in-out infinite'
+				'float': 'float 6s ease-in-out infinite',
+				'fadeInUp': 'fadeInUp 0.8s ease-out',
+				'fadeInLeft': 'fadeInLeft 0.8s ease-out',
+				'fadeInRight': 'fadeInRight 0.8s ease-out',
+				'slideInUp': 'slideInUp 0.8s ease-out',
+				'rotateIn': 'rotateIn 0.8s ease-out',
+				'glow': 'glow 2s ease-in-out infinite',
+				'pulse-slow': 'pulse 3s ease-in-out infinite',
+				'bounce-slow': 'bounce 2s infinite'
 			},
 			backgroundImage: {
 				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
 				'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
 				'hero-gradient': 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
 				'blue-gradient': 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+				'dark-gradient': 'linear-gradient(135deg, #0f0f23 0%, #1a1a3e 25%, #2d2d5f 50%, #1a1a3e 75%, #0f0f23 100%)',
 			}
 		}
 	},
