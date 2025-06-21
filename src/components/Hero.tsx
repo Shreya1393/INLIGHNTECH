@@ -1,76 +1,209 @@
 
-import { ArrowRight, Play, Star } from "lucide-react";
+import { motion } from "framer-motion";
+import { ArrowRight, Play, Star, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Hero = () => {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        delayChildren: 0.3,
+        staggerChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 50, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.8,
+        ease: "easeOut"
+      }
+    }
+  };
+
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50"></div>
-      
-      {/* Animated Background Elements */}
+    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+      {/* Animated Background Grid */}
       <div className="absolute inset-0">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-blue-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float"></div>
-        <div className="absolute top-40 right-10 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute bottom-20 left-1/2 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float" style={{ animationDelay: '4s' }}></div>
+        <motion.div 
+          className="absolute inset-0 bg-gradient-to-r from-blue-600/5 to-purple-600/5"
+          animate={{
+            backgroundPosition: ["0% 0%", "100% 100%"],
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            repeatType: "reverse",
+          }}
+        />
       </div>
 
-      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 pt-20">
+      <motion.div 
+        className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
         <div className="text-center max-w-5xl mx-auto">
           {/* Badge */}
-          <div className="inline-flex items-center px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full border border-gray-200 mb-8 animate-fade-in">
-            <Star className="w-4 h-4 text-yellow-500 mr-2" />
-            <span className="text-sm font-medium text-gray-700">Trusted by 500+ Companies Worldwide</span>
-          </div>
+          <motion.div 
+            className="inline-flex items-center px-6 py-3 bg-blue-500/20 backdrop-blur-sm rounded-full border border-blue-500/30 mb-8 glow-blue"
+            variants={itemVariants}
+            whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(59, 130, 246, 0.4)" }}
+          >
+            <Star className="w-4 h-4 text-yellow-400 mr-2" />
+            <span className="text-sm font-medium text-blue-200">Trusted by 500+ Companies Worldwide</span>
+          </motion.div>
 
           {/* Main Heading */}
-          <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold font-poppins text-gray-900 mb-6 animate-slide-in-left">
+          <motion.h1 
+            className="text-4xl sm:text-5xl lg:text-7xl font-bold font-poppins text-white mb-6"
+            variants={itemVariants}
+          >
             Digital Innovation &{" "}
-            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            <motion.span 
+              className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent"
+              animate={{
+                backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+              }}
+            >
               Technology Solutions
-            </span>
-          </h1>
+            </motion.span>
+          </motion.h1>
 
           {/* Subheading */}
-          <p className="text-lg sm:text-xl lg:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed animate-slide-in-right" style={{ animationDelay: '0.2s' }}>
+          <motion.p 
+            className="text-lg sm:text-xl lg:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed"
+            variants={itemVariants}
+          >
             We transform businesses through cutting-edge technology, innovative design, and strategic digital solutions that drive growth and success.
-          </p>
+          </motion.p>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12 animate-fade-in" style={{ animationDelay: '0.4s' }}>
-            <Button className="bg-blue-gradient text-white px-8 py-4 rounded-lg font-semibold text-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 group">
-              Start Your Project
-              <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-            </Button>
-            <Button variant="outline" className="px-8 py-4 rounded-lg font-semibold text-lg border-2 border-gray-300 hover:border-primary-600 hover:text-primary-600 transition-all duration-300 group">
-              <Play className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
-              Watch Demo
-            </Button>
-          </div>
+          <motion.div 
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12"
+            variants={itemVariants}
+          >
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Button className="bg-tech-gradient text-white px-8 py-4 rounded-lg font-semibold text-lg hover:shadow-xl hover:shadow-blue-500/25 transition-all duration-300 group glow-blue">
+                Start Your Project
+                <motion.div
+                  className="ml-2"
+                  animate={{ x: [0, 5, 0] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                >
+                  <ArrowRight className="w-5 h-5" />
+                </motion.div>
+              </Button>
+            </motion.div>
+            
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Button variant="outline" className="px-8 py-4 rounded-lg font-semibold text-lg border-2 border-blue-400/50 text-blue-400 hover:border-blue-400 hover:bg-blue-400/10 transition-all duration-300 group backdrop-blur-sm">
+                <Play className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
+                Watch Demo
+              </Button>
+            </motion.div>
+          </motion.div>
 
           {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto animate-scale-in" style={{ animationDelay: '0.6s' }}>
+          <motion.div 
+            className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto"
+            variants={itemVariants}
+          >
             {[
               { number: "500+", label: "Projects Delivered" },
               { number: "50+", label: "Happy Clients" },
               { number: "5+", label: "Years Experience" },
               { number: "24/7", label: "Support Available" }
             ].map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="text-3xl lg:text-4xl font-bold text-gray-900 mb-2">{stat.number}</div>
-                <div className="text-gray-600 font-medium">{stat.label}</div>
-              </div>
+              <motion.div 
+                key={index} 
+                className="text-center p-4 rounded-lg bg-blue-500/10 backdrop-blur-sm border border-blue-500/20"
+                whileHover={{ 
+                  scale: 1.05,
+                  boxShadow: "0 0 20px rgba(59, 130, 246, 0.3)",
+                  borderColor: "rgba(59, 130, 246, 0.5)"
+                }}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8 + index * 0.1, duration: 0.6 }}
+              >
+                <motion.div 
+                  className="text-3xl lg:text-4xl font-bold text-white mb-2"
+                  animate={{ 
+                    textShadow: [
+                      "0 0 0px rgba(59, 130, 246, 0)",
+                      "0 0 10px rgba(59, 130, 246, 0.5)",
+                      "0 0 0px rgba(59, 130, 246, 0)"
+                    ]
+                  }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
+                  {stat.number}
+                </motion.div>
+                <div className="text-gray-400 font-medium">{stat.label}</div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
+      </motion.div>
+
+      {/* Floating Tech Icons */}
+      <div className="absolute inset-0 overflow-hidden">
+        {[...Array(8)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute text-blue-400/20"
+            style={{
+              left: `${20 + (i * 10)}%`,
+              top: `${30 + (i * 5)}%`,
+            }}
+            animate={{
+              y: [0, -30, 0],
+              rotate: [0, 180, 360],
+              opacity: [0.2, 0.6, 0.2],
+            }}
+            transition={{
+              duration: 8 + i,
+              repeat: Infinity,
+              delay: i * 0.5,
+            }}
+          >
+            <Zap className="w-6 h-6" />
+          </motion.div>
+        ))}
       </div>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <div className="w-6 h-10 border-2 border-gray-400 rounded-full flex justify-center">
-          <div className="w-1 h-3 bg-gray-400 rounded-full mt-2 animate-pulse"></div>
+      <motion.div 
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+        animate={{ y: [0, 10, 0] }}
+        transition={{ duration: 2, repeat: Infinity }}
+      >
+        <div className="w-6 h-10 border-2 border-blue-400/50 rounded-full flex justify-center">
+          <motion.div 
+            className="w-1 h-3 bg-blue-400 rounded-full mt-2"
+            animate={{ opacity: [0.5, 1, 0.5] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          />
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };

@@ -1,5 +1,6 @@
 
-import { Star, Quote } from "lucide-react";
+import { motion } from "framer-motion";
+import { Star, Quote, Users } from "lucide-react";
 
 const Testimonials = () => {
   const testimonials = [
@@ -53,89 +54,198 @@ const Testimonials = () => {
     }
   ];
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        delayChildren: 0.2,
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 50, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: { duration: 0.8, ease: "easeOut" }
+    }
+  };
+
   return (
-    <section className="py-20 lg:py-32 bg-white">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-20 lg:py-32 bg-gradient-to-br from-tech-darker to-tech-dark relative overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-1/3 left-1/3 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-1/3 right-1/3 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl"></div>
+      </div>
+
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 animate-fade-in">
-          <div className="inline-flex items-center px-4 py-2 bg-blue-100 rounded-full mb-6">
-            <span className="text-sm font-semibold text-blue-700">Client Testimonials</span>
-          </div>
+        <motion.div 
+          className="text-center max-w-3xl mx-auto mb-16"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <motion.div 
+            className="inline-flex items-center px-4 py-2 bg-blue-500/20 backdrop-blur-sm rounded-full border border-blue-500/30 mb-6 glow-blue"
+            whileHover={{ scale: 1.05 }}
+          >
+            <Users className="w-4 h-4 text-blue-400 mr-2" />
+            <span className="text-sm font-semibold text-blue-300">Client Testimonials</span>
+          </motion.div>
           
-          <h2 className="text-3xl lg:text-5xl font-bold text-gray-900 mb-6 font-poppins">
+          <h2 className="text-3xl lg:text-5xl font-bold text-white mb-6 font-poppins">
             What Our{" "}
-            <span className="text-primary-600">Clients Say</span>
+            <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+              Clients Say
+            </span>
           </h2>
           
-          <p className="text-lg text-gray-600 leading-relaxed">
+          <p className="text-lg text-gray-300 leading-relaxed">
             Don't just take our word for it. Here's what our clients have to say about their 
             experience working with InLighnTech and the results we've delivered.
           </p>
-        </div>
+        </motion.div>
 
         {/* Testimonials Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <motion.div 
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+        >
           {testimonials.map((testimonial, index) => (
-            <div 
+            <motion.div 
               key={index}
-              className="bg-gray-50 p-8 rounded-xl hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 animate-scale-in"
-              style={{ animationDelay: `${index * 0.1}s` }}
+              className="bg-card/30 backdrop-blur-sm p-8 rounded-xl border border-blue-500/20 hover:border-blue-400/50 transition-all duration-500 relative overflow-hidden group"
+              variants={itemVariants}
+              whileHover={{ 
+                y: -10,
+                boxShadow: "0 25px 50px rgba(0, 0, 0, 0.4)",
+              }}
             >
-              {/* Quote Icon */}
-              <div className="mb-6">
-                <Quote className="w-8 h-8 text-primary-600 opacity-50" />
+              {/* Hover Gradient */}
+              <motion.div 
+                className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                initial={{ scale: 0 }}
+                whileHover={{ scale: 1 }}
+              />
+
+              <div className="relative z-10">
+                {/* Quote Icon */}
+                <motion.div 
+                  className="mb-6"
+                  initial={{ rotate: -180, opacity: 0 }}
+                  whileInView={{ rotate: 0, opacity: 1 }}
+                  transition={{ duration: 0.6 }}
+                >
+                  <Quote className="w-8 h-8 text-blue-400 opacity-50" />
+                </motion.div>
+                
+                {/* Rating */}
+                <motion.div 
+                  className="flex items-center mb-4"
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                >
+                  {[...Array(testimonial.rating)].map((_, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, scale: 0 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: i * 0.1 + 0.3, duration: 0.3 }}
+                    >
+                      <Star className="w-5 h-5 text-yellow-400 fill-current" />
+                    </motion.div>
+                  ))}
+                </motion.div>
+                
+                {/* Content */}
+                <motion.p 
+                  className="text-gray-300 mb-6 leading-relaxed"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  transition={{ duration: 0.8, delay: 0.4 }}
+                >
+                  "{testimonial.content}"
+                </motion.p>
+                
+                {/* Author */}
+                <motion.div 
+                  className="flex items-center"
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: 0.5 }}
+                >
+                  <motion.img 
+                    src={testimonial.image} 
+                    alt={testimonial.name}
+                    className="w-12 h-12 rounded-full object-cover mr-4 border-2 border-blue-500/30"
+                    whileHover={{ scale: 1.1, borderColor: "rgba(59, 130, 246, 0.8)" }}
+                    transition={{ duration: 0.3 }}
+                  />
+                  <div>
+                    <h4 className="font-semibold text-white">{testimonial.name}</h4>
+                    <p className="text-sm text-gray-400">{testimonial.position}</p>
+                    <p className="text-xs text-blue-400">{testimonial.company}</p>
+                  </div>
+                </motion.div>
               </div>
-              
-              {/* Rating */}
-              <div className="flex items-center mb-4">
-                {[...Array(testimonial.rating)].map((_, i) => (
-                  <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
-                ))}
-              </div>
-              
-              {/* Content */}
-              <p className="text-gray-700 mb-6 leading-relaxed">
-                "{testimonial.content}"
-              </p>
-              
-              {/* Author */}
-              <div className="flex items-center">
-                <img 
-                  src={testimonial.image} 
-                  alt={testimonial.name}
-                  className="w-12 h-12 rounded-full object-cover mr-4"
-                />
-                <div>
-                  <h4 className="font-semibold text-gray-900">{testimonial.name}</h4>
-                  <p className="text-sm text-gray-600">{testimonial.position}</p>
-                  <p className="text-xs text-primary-600">{testimonial.company}</p>
-                </div>
-              </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* Stats Section */}
-        <div className="mt-20 bg-blue-gradient rounded-2xl p-8 lg:p-12 text-center animate-fade-in" style={{ animationDelay: '0.8s' }}>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-white">
-            <div>
-              <div className="text-3xl lg:text-4xl font-bold mb-2">500+</div>
-              <div className="text-blue-100">Happy Clients</div>
-            </div>
-            <div>
-              <div className="text-3xl lg:text-4xl font-bold mb-2">98%</div>
-              <div className="text-blue-100">Satisfaction Rate</div>
-            </div>
-            <div>
-              <div className="text-3xl lg:text-4xl font-bold mb-2">1000+</div>
-              <div className="text-blue-100">Projects Completed</div>
-            </div>
-            <div>
-              <div className="text-3xl lg:text-4xl font-bold mb-2">24/7</div>
-              <div className="text-blue-100">Support Available</div>
-            </div>
-          </div>
-        </div>
+        <motion.div 
+          className="mt-20 bg-gradient-to-r from-blue-500/20 to-purple-500/20 backdrop-blur-sm rounded-2xl p-8 lg:p-12 text-center border border-blue-500/30"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+        >
+          <motion.div 
+            className="grid grid-cols-2 md:grid-cols-4 gap-8 text-white"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
+            {[
+              { value: "500+", label: "Happy Clients" },
+              { value: "98%", label: "Satisfaction Rate" },
+              { value: "1000+", label: "Projects Completed" },
+              { value: "24/7", label: "Support Available" }
+            ].map((stat, index) => (
+              <motion.div
+                key={index}
+                variants={itemVariants}
+                whileHover={{ scale: 1.05 }}
+              >
+                <motion.div 
+                  className="text-3xl lg:text-4xl font-bold mb-2"
+                  animate={{ 
+                    textShadow: [
+                      "0 0 0px rgba(59, 130, 246, 0)",
+                      "0 0 10px rgba(59, 130, 246, 0.8)",
+                      "0 0 0px rgba(59, 130, 246, 0)"
+                    ]
+                  }}
+                  transition={{ duration: 2, repeat: Infinity, delay: index * 0.5 }}
+                >
+                  {stat.value}
+                </motion.div>
+                <div className="text-blue-200">{stat.label}</div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );
